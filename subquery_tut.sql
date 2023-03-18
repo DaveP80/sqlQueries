@@ -90,5 +90,5 @@ UPDATE Employees SET age = FLOOR(RANDOM() * (65 - 20 + 1) + 20) WHERE age IS NUL
 update employees set salary = salary * 1.15 where age in (select age from employees where age >= 27);
 
 select Employees.emp_id, Employees.emp_name, departments.dept from Employees join departments on departments.dept = Employees.dept;
-//refer to practice_joins.sql
+-- refer to practice_joins.sql
 select dept, sum(salary) as total_sal from Employees group by dept;

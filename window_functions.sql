@@ -32,10 +32,10 @@ insert into students (Student_Id, Student_Name, Gender, Subject_Name, Marks_Scor
 insert into students (Student_Id, Student_Name, Gender, Subject_Name, Marks_Scored, Total_Marks) values (24, 'Veronica', 'Female', 'Music', 100, 100);
 insert into students (Student_Id, Student_Name, Gender, Subject_Name, Marks_Scored, Total_Marks) values (25, 'Jody', 'Male', 'Baby', 23, 100);
 
-//normal group by aggregate function
+-- normal group by aggregate function
 select subject_name,MAX(marks_scored) as max_marks from students group by subject_name;
 
-//aggregate window with something linke the over() clause
+-- aggregate window with something linke the over() clause
 with cte as (select AVG(marks_scored) as Average_marks from students), cte2 as (select MIN(marks_scored) as Min_marks from students),
 cte3 as (select MAX(marks_scored) as Max_marks from students) select students.*, cte.Average_marks, cte2.Min_marks, cte3.Max_marks 
 from students, cte, cte2, cte3;
