@@ -42,3 +42,14 @@ from final_data
 where final_balance >= 1000
 and flag = 1
 group by account_no;
+
+
+-- alternate solution
+
+SELECT account_no, transaction_date
+FROM (
+  SELECT account_no, transaction_date, SUM(CASE WHEN debit_credit = 'credit' THEN transaction_amount ELSE -transaction_amount END) OVER (PARTITION BY account_no ORDER BY transaction_date) AS balance, transaction_amount
+  FROM account_balance
+) AS subquery
+WHERE balance >= 1000
+  AND balance - transaction_amount < 1000;
