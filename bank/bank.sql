@@ -45,3 +45,13 @@ GROUP BY bank.id;
 SELECT SUM(credit + debit) AS total
 FROM transactions
 WHERE bank_id = 1;
+
+--  result set with one row for each unique bank.id value
+-- , along with the corresponding bank.name value and the 
+-- total credit and debit for all transactions associated with 
+-- that ID. The SUM() function is used to aggregate the credit and 
+-- debit values for each group.
+SELECT bank.id, bank.name, SUM(transactions.credit) AS total_credit, SUM(transactions.debit) AS total_debit
+FROM bank
+JOIN transactions ON bank.id = transactions.bank_id
+GROUP BY bank.id, bank.name;
