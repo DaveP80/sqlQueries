@@ -63,3 +63,20 @@ ORDER BY
 --           10 | space   |          9 |     2
 --            2 | tommy   |          5 |     3
 --            8 | mark    |          5 |     3
+
+-- make a query to supervisors and their subordinates
+SELECT
+    manager_id,
+    array_agg(employee_id) AS employee_ids
+FROM
+    employees
+WHERE
+    manager_id IS NOT NULL
+GROUP BY
+    manager_id;
+--  manager_id | employee_ids 
+-- ------------+--------------
+--           9 | {10}
+--           5 | {2,8}
+--           6 | {3,7}
+--           1 | {4,5}
