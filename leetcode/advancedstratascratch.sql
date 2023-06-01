@@ -40,12 +40,10 @@ WHERE NOT EXISTS (
   SELECT 1
   FROM
 (
-SELECT user_id, product_id, COUNT(*) OVER (PARTITION BY user_id) FROM (
-SELECT user_id, product_id, created_at FROM (
+SELECT user_id, product_id FROM (
 SELECT *, MIN(created_at) OVER (PARTITION BY user_id) AS firstday FROM marketing_campaign
-) innb WHERE innb.created_at = innb.firstday) zz
+) innb WHERE innb.firstday = innb.created_at
 ) table2
-  
   WHERE table2.user_id = m.user_id
     AND table2.product_id = m.product_id
 )
