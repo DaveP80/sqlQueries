@@ -48,10 +48,7 @@ SELECT *, MIN(created_at) OVER (PARTITION BY user_id) AS firstday FROM marketing
     AND table2.product_id = m.product_id
 )
 )
-SELECT SUM(count) as count FROM 
-(
-SELECT COUNT(distinct user_id) as count FROM cte GROUP BY user_id
-) innz;
+SELECT COUNT(distinct user_id) as count FROM cte;
 -- count
 -- -----
 --   23
