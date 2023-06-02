@@ -43,7 +43,7 @@ SELECT user_id, MIN(timestamp) pe, action FROM facebook_web_log WHERE action = '
 SELECT user_id, AVG(time_difference) as avg FROM
 (
 SELECT cte2.user_id, 
-EXTRACT(EPOCH FROM (cte2.pe::timestamp - cte.pl::timestamp)) AS time_difference
+cte2.pe - cte.pl time_difference
 FROM cte JOIN cte2 ON cte.user_id = cte2.user_id and DATE(pl) = DATE(pe)
 ) z
 GROUP BY user_id;
