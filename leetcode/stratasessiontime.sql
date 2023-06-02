@@ -35,10 +35,10 @@
 --   0     | 2019-04-28 13:30:40 | scroll_down
 --   0     | 2019-04-28 15:31:40 | page_exit
 WITH cte AS (
-SELECT user_id, MAX(timestamp) pl, action FROM facebook_web_log WHERE action = 'page_load' GROUP BY user_id, DATE(timestamp), action
+SELECT user_id, MAX(timestamp) pl FROM facebook_web_log WHERE action = 'page_load' GROUP BY user_id, DATE(timestamp), action
 ),
 cte2 AS (
-SELECT user_id, MIN(timestamp) pe, action FROM facebook_web_log WHERE action = 'page_exit' GROUP BY user_id, DATE(timestamp), action
+SELECT user_id, MIN(timestamp) pe FROM facebook_web_log WHERE action = 'page_exit' GROUP BY user_id, DATE(timestamp), action
 )
 SELECT user_id, AVG(time_difference) as avg FROM
 (
