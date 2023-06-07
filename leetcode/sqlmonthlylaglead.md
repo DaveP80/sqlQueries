@@ -9,19 +9,15 @@ revenue - last month's revenue) / last month's revenue)*100.
 
 ```sql
 WITH cte AS (
-SELECT created_at, total FROM
+SELECT created_at, SUM(value) as total FROM
 (
-SELECT created_at, SUM(value) OVER (PARTITION BY created_at) total FROM
-(
-select id, CONCAT(YEAR(created_at), '-', CASE WHEN MONTH(created_at) < 10 THEN '0' ELSE '' END, MONTH(created_at)) created_at, value, purchase_id from sf_transactions ORDER BY created_at
-) a 
-) n
-GROUP BY created_at, total
+select CONCAT(YEAR(created_at), '-', CASE WHEN MONTH(created_at) < 10 THEN '0' ELSE '' END, MONTH(created_at)) created_at, value from sf_transactions ORDER BY created_at
+) a GROUP BY created_at
 )
-SELECT created_at AS 'year_month', 
+SELECT created_at as 'year_month', 
 ROUND(((total - LAG(total) OVER (ORDER BY created_at))/LAG(total) OVER (ORDER BY created_at))*100, 2) as revenue_diff_pct FROM 
 (
 SELECT * FROM cte
-) innq;
+) b;
 ```
 <table class="ResultsTable__table"><thead><tr class="ResultsTable__header-row"><th class="ResultsTable__header-cell">year_month</th><th class="ResultsTable__header-cell">revenue_diff_pct</th></tr></thead><tbody><tr class="ResultsTable__row "><td class="ResultsTable__cell">2019-01</td><td class="ResultsTable__cell"></td></tr><tr class="ResultsTable__row "><td class="ResultsTable__cell">2019-02</td><td class="ResultsTable__cell">-28.56</td></tr><tr class="ResultsTable__row "><td class="ResultsTable__cell">2019-03</td><td class="ResultsTable__cell">23.35</td></tr><tr class="ResultsTable__row "><td class="ResultsTable__cell">2019-04</td><td class="ResultsTable__cell">-13.84</td></tr><tr class="ResultsTable__row "><td class="ResultsTable__cell">2019-05</td><td class="ResultsTable__cell">13.49</td></tr><tr class="ResultsTable__row "><td class="ResultsTable__cell">2019-06</td><td class="ResultsTable__cell">-2.78</td></tr><tr class="ResultsTable__row "><td class="ResultsTable__cell">2019-07</td><td class="ResultsTable__cell">-6</td></tr><tr class="ResultsTable__row "><td class="ResultsTable__cell">2019-08</td><td class="ResultsTable__cell">28.36</td></tr><tr class="ResultsTable__row "><td class="ResultsTable__cell">2019-09</td><td class="ResultsTable__cell">-4.97</td></tr><tr class="ResultsTable__row "><td class="ResultsTable__cell">2019-10</td><td class="ResultsTable__cell">-12.68</td></tr><tr class="ResultsTable__row "><td class="ResultsTable__cell">2019-11</td><td class="ResultsTable__cell">1.71</td></tr><tr class="ResultsTable__row "><td class="ResultsTable__cell">2019-12</td><td class="ResultsTable__cell">-2.11</td></tr></tbody></table>
