@@ -8,8 +8,8 @@ SQL Order of Operations
 
 [Mock Data](https://www.mockaroo.com/)
 
-MsSQL(azure), Postgres and MySQL have some differences in Syntax. For example
-MySQL does not have a `LIMIT` keyword.
+MsSQL(azure), Postgres and MsSQL have some differences in Syntax. For example
+MsSQL does not have a `LIMIT` keyword.
 jupyter directory has mysql and postgresql jupyter dataframes
 
 
