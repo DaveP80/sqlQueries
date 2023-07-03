@@ -61,6 +61,7 @@ SELECT
 FROM
 	members_approved_for_voucher;
 ```
+```txt
 id  | name                | email                          | total_spending
 ----+---------------------+--------------------------------+---------------
 6   | Kaylee Legros III   | dannie_smith@kirlin.info       | 1009.26
@@ -79,3 +80,4 @@ id  | name                | email                          | total_spending
 43  | Jarrett Harber Jr.  | amya@durgan.org                | 1162.37
 45  | Lizeth Lynch        | edwardo_wuckert@baumbach.info  | 1033.78
 48  | Mr. Andreane Luettgen | benedict@huelgutkowski.net     | 1493.1
+```
