@@ -1,5 +1,5 @@
 ## Codewars
-### Partially solved
+### PSQL
 <details>
 <p>
 You will be given a table where each record represents a node in a graph. Each node has an outbound connection to another (but not necessarily different) node, and these connections are stored as differences between the nodes' id's.
@@ -10,14 +10,36 @@ The function name can appear only once in your code
 CREATE has to be used exactly once
 You cannot use WITH
 You cannot use EXECUTE
+ id | step | terminal
+----+------+----------
+  1 |   7  |  false
+  2 |   1  |  true
+  3 |   2  |  false
+  4 |   3  |  false
+  5 |  -3  |  false
+  6 |   0  |  true
+  7 |  -3  |  false
+  8 |  -4  |  true
+  -- id 3 returns 2
 </p>
 </details>
 
 ```sql
 CREATE FUNCTION last_node(first_node int) RETURNS int AS $$
-    SELECT id from nodes WHERE id = first_node and terminal = true
-    UNION
-    SELECT CASE WHEN terminal = true id ELSE -1 END, step, CASE WHEN terminal = false THEN id + step ELSE -1 END as storestep from 
-    nodes WHERE id = (SELECT step + id FROM nodes WHERE id = first_node)
-$$ LANGUAGE SQL;
+DECLARE
+    current_id INT := first_node;
+    terminal_found BOOLEAN := (SELECT terminal from nodes where id = first_node);
+    nstep INT := first_node;
+BEGIN
+    WHILE NOT terminal_found LOOP
+        SELECT id+step, terminal, id INTO current_id, terminal_found, nstep
+        FROM nodes
+        WHERE id = current_id;
+        IF terminal_found THEN
+            RETURN nstep;
+        END IF;
+    END LOOP;
+    RETURN first_node;
+END;
+$$ LANGUAGE plpgsql;
 ```
