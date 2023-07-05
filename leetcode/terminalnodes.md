@@ -10,6 +10,9 @@ The function name can appear only once in your code
 CREATE has to be used exactly once
 You cannot use WITH
 You cannot use EXECUTE
+</p>
+<pre>
+<code>
  id | step | terminal
 ----+------+----------
   1 |   7  |  false
@@ -21,7 +24,8 @@ You cannot use EXECUTE
   7 |  -3  |  false
   8 |  -4  |  true
   -- id 3 returns 2
-</p>
+</code>
+</pre>
 </details>
 
 ```sql
