@@ -22,6 +22,7 @@ select * from random_id;
 +------+-------+
 -- Solution
 ```sql
+-- You've been asked to arrange a column of random IDs in ascending -- alphabetical order based on their second character.
 select id, right(left(id, 2), 1) as second from random_id order by second;
 ```
 +-------+---------+
