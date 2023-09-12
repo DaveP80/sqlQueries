@@ -32,22 +32,21 @@ select
         ' hours ago'
     ) last_login
 from
-    deals d
-    join deal_login_fact df ON d.deal_id = df.deal_id
+    deals d natural
+    join deal_login_fact df
 order by
     d.deal_id desc;
 -- output
-+---------+-----------+------------+--------------------------+
-| deal_id | deal_name | is_active  |        last_login        |
-+---------+-----------+------------+--------------------------+
-|   10    |  Deal 10  |   false    |  120 days and 0 hours ago |
-|   9     |   Deal 9  |   false    |  120 days and 0 hours ago |
-|   8     |   Deal 8  |   false    |  120 days and 0 hours ago |
-|   7     |   Deal 7  |   false    |  120 days and 0 hours ago |
-|   6     |   Deal 6  |   false    |  120 days and 0 hours ago |
-|   5     |   Deal 5  |   true     |   60 days and 0 hours ago |
-|   4     |   Deal 4  |   true     |   60 days and 0 hours ago |
-|   3     |   Deal 3  |   true     |   60 days and 0 hours ago |
-|   2     |   Deal 2  |   true     |   60 days and 0 hours ago |
-|   1     |   Deal 1  |   true     |   60 days and 0 hours ago |
-+---------+-----------+------------+--------------------------+
++ ---------+-----------+------------+--------------------------+
+| deal_id | deal_name | is_active | last_login | + ---------+-----------+------------+--------------------------+
+| 10 | Deal 10 | false | 120 days
+and 0 hours ago | | 9 | Deal 9 | false | 120 days
+and 0 hours ago | | 8 | Deal 8 | false | 120 days
+and 0 hours ago | | 7 | Deal 7 | false | 120 days
+and 0 hours ago | | 6 | Deal 6 | false | 120 days
+and 0 hours ago | | 5 | Deal 5 | true | 60 days
+and 0 hours ago | | 4 | Deal 4 | true | 60 days
+and 0 hours ago | | 3 | Deal 3 | true | 60 days
+and 0 hours ago | | 2 | Deal 2 | true | 60 days
+and 0 hours ago | | 1 | Deal 1 | true | 60 days
+and 0 hours ago | + ---------+-----------+------------+--------------------------+
