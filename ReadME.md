@@ -6,6 +6,8 @@ SQL Order of Operations
 - HAVING
 - ORDER BY
 
+recursive, window functions, unions, triggers are all covered
+
 [Mock Data](https://www.mockaroo.com/)
 
 MsSQL(azure), Postgres and MsSQL have some differences in Syntax. For example
