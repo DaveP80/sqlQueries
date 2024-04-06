@@ -2,3 +2,4 @@
 .env
 scratch.sql
 .DS_Store
+.spyproject
