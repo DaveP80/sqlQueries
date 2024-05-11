@@ -1,4 +1,5 @@
 SQL Order of Operations
+
 - SELECT
 - FROM
 - WHERE
@@ -14,4 +15,7 @@ MsSQL(azure), Postgres and MsSQL have some differences in Syntax. For example
 MsSQL does not have a `LIMIT` keyword.
 jupyter directory has mysql and postgresql jupyter dataframes
 
-
+```SQL
+-- To get the speed of sql queries run this in sql terminal
+\timing
+```
