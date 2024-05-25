@@ -27,3 +27,14 @@ GROUP BY
 ORDER BY
     total_emails DESC,
     from_user;
+-- LeetCode No. 1581 Customer Who Visited but Did Not Make Any Transactions
+select
+  a.customer_id,
+  count(*) count_no_trans
+from
+  visits a
+  left join transactions b on a.visit_id = b.visit_id
+where
+  transaction_id is null
+group by
+  1;
