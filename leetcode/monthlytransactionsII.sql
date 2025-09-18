@@ -3,26 +3,72 @@
 with
   cte as (
     select
-      month(t.trans_date) as t_month,
+      left(trans_date, 7) as "month",
       country,
-      sum(amount) as amount_tr,
-      count(*) as count_tr
+      count(*) as approved_count,
+      sum(amount) as approved_amount,
+      0 as chargeback_count,
+      0 as chargeback_amount
     from
-      transactions t,
-      sum(
-        case
-          when state = 'approved' then 1
-          else 0
-        end
-      ) as count_appr
-      join chargebacks c on month(t.trans_date) = month(c.trans_date)
+      transactions
     where
       state = 'approved'
     group by
-      month(t.trans_date),
+      month(trans_date),
       country
+  ),
+  cte2 as (
+    select
+      left(c.trans_date, 7) as "month",
+      country,
+      0 as approved_count,
+      0 as approved_amount,
+      count(*) as chargeback_count,
+      sum(amount) as chargeback_amount
+    from
+      transactions t
+      join chargebacks c on id = trans_id
+    group by
+      month(c.trans_date),
+      country
+  ),
+  cte3 as (
+    select
+      c.month,
+      c.country,
+      c.approved_count,
+      c.approved_amount,
+      c2.chargeback_count,
+      c2.chargeback_amount
+    from
+      cte c
+      join cte2 c2 on (c.month, c.country) = (c2.month, c2.country)
   )
 select
   *
 from
-  cte;
+  cte3
+union
+select
+  *
+from
+  cte2
+where
+  cte2.month not in (
+    select
+      month
+    from
+      cte3
+  )
+union
+select
+  *
+from
+  cte
+where
+  cte.month not in (
+    select
+      month
+    from
+      cte3
+  );
